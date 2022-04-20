@@ -4,25 +4,25 @@
 
 import 'dart:convert';
 
-List<Order> orderFromJson(String str) => List<Order>.from(json.decode(str).map((x) => Order.fromJson(x)));
+List<wipList> orderFromJson(String str) => List<wipList>.from(json.decode(str).map((x) => wipList.fromJson(x)));
 
-String orderToJson(List<Order> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String orderToJson(List<wipList> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-
-
-class Order {
-  Order({
+class wipList {
+  wipList({
     this.id="",
     this.service,
+    this.groupOrder="",
     this.staff,
-    this.unitCost=0,
+    this.dateCreated,
+    this.unitCost="",
     this.qty=0,
-    this.totalCost=0,
+    this.totalCost="",
     this.orderId="",
-    this.groupOrderId="",
     this.remark="",
     this.status="",
     this.wipStage=false,
+    this.dateUpdated,
     this.product,
     this.customer,
     this.business,
@@ -30,31 +30,35 @@ class Order {
 
   String id;
   List<Service>? service;
+  dynamic groupOrder;
   Staff? staff;
-  int unitCost;
+  DateTime? dateCreated;
+  String unitCost;
   int qty;
-  int totalCost;
+  String totalCost;
   String orderId;
-  String groupOrderId;
   String remark;
   String status;
   bool wipStage;
+  DateTime? dateUpdated;
   Product? product;
   Customer? customer;
   Business? business;
 
-  factory Order.fromJson(Map<String, dynamic> json) => Order(
+  factory wipList.fromJson(Map<String, dynamic> json) => wipList(
     id: json["id"],
     service: List<Service>.from(json["service"].map((x) => Service.fromJson(x))),
+    groupOrder: json["group_order"],
     staff: Staff.fromJson(json["staff"]),
+    dateCreated: DateTime.parse(json["date_created"]),
     unitCost: json["unit_cost"],
     qty: json["qty"],
     totalCost: json["total_cost"],
     orderId: json["order_id"],
-    groupOrderId: json["group_order_id"] == null ? "" : json["group_order_id"],
     remark: json["remark"],
-    status: json["status"],
+    status:json["status"],
     wipStage: json["wip_stage"],
+    dateUpdated: DateTime.parse(json["date_updated"]),
     product: Product.fromJson(json["product"]),
     customer: json["customer"] == null ? null : Customer.fromJson(json["customer"]),
     business: Business.fromJson(json["business"]),
@@ -63,15 +67,17 @@ class Order {
   Map<String, dynamic> toJson() => {
     "id": id,
     "service": List<dynamic>.from(service!.map((x) => x.toJson())),
+    "group_order": groupOrder,
     "staff": staff!.toJson(),
+    "date_created": dateCreated!.toIso8601String(),
     "unit_cost": unitCost,
     "qty": qty,
     "total_cost": totalCost,
     "order_id": orderId,
-    "group_order_id": groupOrderId == null ? null : groupOrderId,
     "remark": remark,
     "status": status,
     "wip_stage": wipStage,
+    "date_updated": dateUpdated!.toIso8601String(),
     "product": product!.toJson(),
     "customer": customer == null ? null : customer!.toJson(),
     "business": business!.toJson(),
@@ -83,7 +89,7 @@ class Business {
     this.id="",
     this.storeName="",
     this.address="",
-    this.bnString,
+    this.bnString="",
     this.account="",
     this.country="",
     this.state="",
@@ -92,16 +98,16 @@ class Business {
   String id;
   String storeName;
   String address;
-  dynamic bnString;
+  String bnString;
   String account;
   String country;
   String state;
 
   factory Business.fromJson(Map<String, dynamic> json) => Business(
     id: json["id"],
-    storeName:json["store_name"],
-    address:json["address"],
-    bnString: json["bn_string"],
+    storeName: json["store_name"],
+    address: json["address"],
+    bnString:json["bn_string"],
     account: json["account"],
     country: json["country"],
     state: json["state"],
@@ -258,6 +264,8 @@ class Product {
 
 
 
+
+
 class SelectableOptions {
   SelectableOptions({
     this.color="",
@@ -268,22 +276,23 @@ class SelectableOptions {
   String style;
 
   factory SelectableOptions.fromJson(Map<String, dynamic> json) => SelectableOptions(
-    color: json["Color"],
-    style: json["style"],
+    color: json["Color"]==null?"":json["Color"],
+    style: json["style"]==null?"":json["Color"],
   );
+
+
 
   Map<String, dynamic> toJson() => {
     "Color": color,
-    "style":style,
+    "style": style,
   };
 }
-
 
 class Service {
   Service({
     this.id="",
     this.name="",
-    this.amount,
+    this.amount="",
   });
 
   String id;
@@ -292,7 +301,7 @@ class Service {
 
   factory Service.fromJson(Map<String, dynamic> json) => Service(
     id: json["id"],
-    name: json["name"],
+    name:json["name"],
     amount: json["amount"],
   );
 
@@ -302,6 +311,7 @@ class Service {
     "amount": amount,
   };
 }
+
 
 
 class Staff {
@@ -318,6 +328,7 @@ class Staff {
     this.avatar="",
   });
 
+
   int id;
   String firstName;
   String lastName;
@@ -331,27 +342,18 @@ class Staff {
 
   factory Staff.fromJson(Map<String, dynamic> json) => Staff(
     id: json["id"],
-    firstName: json["first_name"],
-    lastName: json["last_name"],
-    phone: json["phone"],
-    business: json["business"],
-    email:json["email"],
-    designation: json["designation"],
-    address: json["address"],
-    dob: DateTime.parse(json["dob"]),
-    avatar: json["avatar"],
+    firstName: json["name"]==null?"": json["name"],
+    // designation: json["designation"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "first_name": firstName,
-    "last_name": lastName,
-    "phone": phone,
-    "business": business,
-    "email": email,
-    "designation": designation,
-    "address":address,
-    "dob": "${dob!.year.toString().padLeft(4, '0')}-${dob!.month.toString().padLeft(2, '0')}-${dob!.day.toString().padLeft(2, '0')}",
-    "avatar": avatar,
+    "name": firstName,
+    // "designation": designation,
+    // "address": address,
+    // "dob": "${dob!.year.toString().padLeft(4, '0')}-${dob!.month.toString().padLeft(2, '0')}-${dob!.day.toString().padLeft(2, '0')}",
+    // "avatar": avatar,
   };
 }
+
+

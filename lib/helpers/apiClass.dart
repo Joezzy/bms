@@ -139,9 +139,9 @@ class RequestHelper {
         return data;
       }
     } on DioError catch (e) {
-      print(e.response!.data);
-      print(e.response!.data);
-      print(e.response!.data);
+      // print(e.response!.data);
+      // print(e.response!.data);
+      // print(e.response!.data);
 
       if (e.type == DioErrorType.response) {
         switch (e.response!.statusCode) {

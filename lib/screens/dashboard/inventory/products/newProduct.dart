@@ -10,28 +10,20 @@ import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user/common/SizeConfig.dart';
-import 'package:user/common/backgroundWavy.dart';
 import 'package:user/common/app_theme.dart';
 import 'package:user/common/constant.dart';
 import 'package:user/helpers/apiClass.dart';
 import 'package:user/model/business.dart';
 import 'package:user/model/category.dart';
-import 'package:user/model/countries.dart';
 import 'package:user/model/product.dart';
 import 'package:user/model/subCategory.dart';
-import 'package:user/screens/dashboard/dashBoardTab.dart';
-import 'package:user/screens/loginScreen.dart';
-import 'package:user/screens/registrationScreen.dart';
 import 'package:user/widgets/heventhButton.dart';
 import 'package:user/widgets/heventhTextBox.dart';
 import 'package:user/widgets/inputWithTitle.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
 import 'package:user/widgets/myAppBar.dart';
 import 'package:path/path.dart';
 class NewProductScreen extends StatefulWidget {
@@ -297,8 +289,8 @@ if(widget.product!=null){
   }
 
 
-  double imgH = MySize.size100 * 2;
-  double imgW = MySize.size100 * 2;
+  double imgH = MySize.size350;
+  double imgW = MySize.size350;
   File? _selectedFile;
   bool _inProcess = false;
   Dio dio = Dio();
@@ -361,8 +353,8 @@ if(widget.product!=null){
 
       XFile? pickedFile = await _picker.pickImage(
         source: source,
-        maxWidth: 300,
-        maxHeight: 300,
+        // maxWidth: 300,
+        // maxHeight: 300,
         imageQuality: 100,
       );
       setState(() {
@@ -370,32 +362,13 @@ if(widget.product!=null){
       });
       File img = File(pickedFile!.path);
       if (img != null) {
-        File? cropped = await ImageCropper().cropImage(
-          sourcePath: img.path,
-          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-          compressQuality: 100,
-          maxHeight: 150,
-          maxWidth: 150,
-          compressFormat: ImageCompressFormat.jpg,
-          androidUiSettings: AndroidUiSettings(
-            toolbarColor: Colors.white,
-            toolbarTitle: "Couriax",
-            statusBarColor: Colors.black,
-            // backgroundColor: Colors.white,
-          ),
-        );
-
-
-
         this.setState(() {
-          _selectedFile = File(cropped!.path);
+          _selectedFile = File(img.path);
           print("PICTURE OUTPUT= $_selectedFile");
           // print(filePath);
           _inProcess = false;
         });
-        if (img != null) {
-          // await updateAvatarMethod();
-        }
+
       }
     } on PlatformException catch (e) {
       print(e);

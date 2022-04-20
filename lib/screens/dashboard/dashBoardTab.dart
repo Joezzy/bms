@@ -14,7 +14,9 @@ import 'package:user/helpers/apiClass.dart';
 
 import 'package:user/screens/dashboard/dashboardScreen.dart';
 import 'package:user/screens/dashboard/inventory/inventoryTab.dart';
-import 'package:user/screens/dashboard/operation/orderScreen.dart';
+import 'package:user/screens/dashboard/order/orderScreen.dart';
+import 'package:user/screens/dashboard/order/orderTab.dart';
+import 'package:user/screens/dashboard/order/wipScreen.dart';
 import 'package:user/screens/dashboard/pos/cartScreen.dart';
 import 'package:user/screens/dashboard/pos/posScreen.dart';
 import 'package:user/screens/dashboard/users/userTab.dart';
@@ -40,7 +42,7 @@ class _DashBoardTabState extends State<DashBoardTab> with SingleTickerProviderSt
     super.initState();
 
     getUser();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 6, vsync: this);
     _tabController.index=widget.pageIndex;
     onItemClicked(widget.pageIndex);
   }
@@ -69,7 +71,7 @@ class _DashBoardTabState extends State<DashBoardTab> with SingleTickerProviderSt
     TextStyle tabStyle=TextStyle(fontSize: MySize.size12,fontWeight: FontWeight.w600);
 
     return DefaultTabController(
-      length: 5,
+      length: 6,
       initialIndex: widget.pageIndex,
       child: Scaffold(
         // drawer:,
@@ -91,7 +93,7 @@ class _DashBoardTabState extends State<DashBoardTab> with SingleTickerProviderSt
                               builder: (context) => SettingScreen()));
                     },
                     child: UserDP(
-                        image:currentUser!.avatar!=""? currentUser!.avatar: "https://olegeek.fr/wp-content/uploads/2016/03/avartar-femme.png",
+                        image:(currentUser!=null && currentUser!.avatar!="")? currentUser!.avatar: "https://olegeek.fr/wp-content/uploads/2016/03/avartar-femme.png",
                         title: "",
                         subtitle:
                         "Logout",
@@ -143,11 +145,11 @@ class _DashBoardTabState extends State<DashBoardTab> with SingleTickerProviderSt
               indicatorColor: AppTheme.primaryColor,
               labelColor: AppTheme.primaryColor,
               unselectedLabelColor: Colors.grey,
+              isScrollable: true,
               onTap: onItemClicked,
               tabs:   [
                 Tab(
                   child:  InkWell(
-                    // onTap: ()=>onItemClicked(0),
                     child: Text("Dashboard",style: tabStyle,),
                   ),
 
@@ -166,6 +168,11 @@ class _DashBoardTabState extends State<DashBoardTab> with SingleTickerProviderSt
                 Tab(
                   child:  Text("Orders",style: tabStyle,),
                 ),
+                Tab(
+                  child:  Text("WIP",style: tabStyle,),
+                ),
+
+
 
 
               ],
@@ -185,7 +192,9 @@ class _DashBoardTabState extends State<DashBoardTab> with SingleTickerProviderSt
                       InventoryTab(),
                       UserTab(),
                       PosScreen(),
-                      OrderScreen(),
+                      OrderTab(),
+                      WIPScreen(),
+
 
 
 

@@ -20,7 +20,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         children: [
           Container(
             height: MySize.screenHeight,
-            child: Image.asset("assets/welcome2.jpg",
+            child: Image.asset("assets/wel.png",
               fit: BoxFit.cover,),
           ),
 
@@ -29,7 +29,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           left: 0,
           right: 0,
           child: Container(child: Center(child: Image.asset("assets/royal.png")))),
-
 
         Positioned(
            bottom: MySize.size70,

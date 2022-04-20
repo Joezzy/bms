@@ -90,20 +90,20 @@ class _SettingScreenState extends State<SettingScreen> {
                           builder: (context) => BusinessScreen()));
                 },
               ),
-              ListTile(
-                leading: Icon(MdiIcons.folderOutline),
-                title: Text(
-                  "Department",
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DeptSCreen()));
-                },
-              ),
+              // ListTile(
+              //   leading: Icon(MdiIcons.folderOutline),
+              //   title: Text(
+              //     "WIP",
+              //   ),
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => DeptSCreen()));
+              //   },
+              // ),
               ListTile(
                 leading: Icon(MdiIcons.roomServiceOutline),
                 title: Text(

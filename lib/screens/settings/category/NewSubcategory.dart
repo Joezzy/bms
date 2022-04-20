@@ -34,9 +34,7 @@ class _NewSubCategoryScreenState extends State<NewSubCategoryScreen> {
 
   TextEditingController subCategoryController=TextEditingController();
   TextEditingController descriptionController=TextEditingController();
-
   String business="";
-
 
   String get subCategory =>subCategoryController.text;
   String get description =>descriptionController.text;

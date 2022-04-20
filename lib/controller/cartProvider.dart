@@ -135,12 +135,7 @@ class CartProvider extends ChangeNotifier{
         myData = res[0]["data"];
         print("MyData");
         log(json.encode(res[0]["data"]));
-        // firstNameController.clear();
-        // lastNameController.clear();
-        // emailController.clear();
-        // phoneController.clear();
-        // addressController.clear();
-        // _selectedFile=null;
+        cartList!.clear();
 
         Navigator.pop(context,"success");
         MotionToast.success(
